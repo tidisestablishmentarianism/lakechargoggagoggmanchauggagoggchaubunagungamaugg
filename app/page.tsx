@@ -59,11 +59,13 @@ export default function Home() {
     <div className="w-full min-h-screen bg-red-100 pb-12">
       <div className="flex flex-row px-24 py-4 justify-between sm:flex-row bg-red-500 items-center text-white">
         <h1 className="font-bold text-lg">
-          Мой сайт
+          Мой сайтㅤ
+          <input type="text" name="username" placeholder="Ddtlbnt bvz">
+          </input>
         </h1>
         <div className="flex flex-row gap-4 px-24 items-center">
-          <span>Button1</span>
-          <span>Button2</span>
+          <a href="/login">Button1</a>
+          <a href="/register">Button2</a>
           <span>Button3</span>
           <span>Button4</span>
           <button
