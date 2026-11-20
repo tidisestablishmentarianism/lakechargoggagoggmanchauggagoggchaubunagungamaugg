@@ -1,5 +1,33 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Install notes (native modules)
+
+`better-sqlite3` ships prebuilt binaries for every platform we support and sets
+`"gypfile": false`, so nothing needs to be compiled. Older npm versions ignore
+that flag when the tree comes from `package-lock.json` and run a pointless
+`node-gyp rebuild` — which fails on a machine without Python + a C++ toolchain
+(that's the `gyp ERR! find VS ... missing any Windows SDK` error).
+
+The root `package.json` therefore declares:
+
+```json
+"allowScripts": { "better-sqlite3": false, "esbuild": true, "unrs-resolver": true }
+```
+
+npm 11.13+ honours it and skips the build, and the prebuilt
+`better-sqlite3/prebuilds/<platform>-<arch>.node` is loaded instead.
+
+If you are on npm 10.x (no `allowScripts` support) and hit that error, any of
+these work:
+
+```bash
+npm install --ignore-scripts   # prebuilds need no install scripts on our deps
+npm rebuild --ignore-scripts
+```
+
+or just install the build tools once (Visual Studio "Desktop development with C++"
+incl. a Windows SDK + Python on Windows; `python3 make g++` on Linux; Xcode CLT on macOS).
+
 ## Getting Started
 
 First, run the development server:
